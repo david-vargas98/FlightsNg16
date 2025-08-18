@@ -6,12 +6,14 @@ import { AppComponent } from './app.component';
 import { RouterModule } from '@angular/router';
 import { SearchFlightsComponent } from './search-flights/search-flights.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
+import { BookFlightComponent } from './book-flight/book-flight.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SearchFlightsComponent,
-    NavMenuComponent
+    NavMenuComponent,
+    BookFlightComponent
   ],
   imports: [
     BrowserModule,
