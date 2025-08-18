@@ -1,3 +1,5 @@
+using Microsoft.OpenApi.Models;
+
 namespace Flights.Server
 {
     public class Program
@@ -10,7 +12,18 @@ namespace Flights.Server
 
             builder.Services.AddControllers();
 
+            builder.Services.AddSwaggerGen(c =>
+            {
+                c.AddServer(new OpenApiServer
+                {
+                    Description = "Development server",
+                    Url = "https://localhost:7076"
+                }); // Add a server URL for Swagger UI to connect with angular app
+            }); // Register Swagger generator
+
             var app = builder.Build();
+
+            app.UseSwagger().UseSwaggerUI(); // Enable the Swagger middleware and UI
 
             app.UseDefaultFiles();
             app.UseStaticFiles();
