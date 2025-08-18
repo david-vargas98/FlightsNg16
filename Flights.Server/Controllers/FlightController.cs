@@ -72,10 +72,23 @@ namespace Flights.Server.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(400)] // bad request
+        [ProducesResponseType(500)] // internal server error
         public IEnumerable<FlightRm> Search() => flights;
 
+        [ProducesResponseType(404)] // 404 instead of StatusCodes.Status404NotFound for not found
+        [ProducesResponseType(400)]
+        [ProducesResponseType(500)]
         [HttpGet("{id}")]
-        public FlightRm Find(Guid id) => flights.SingleOrDefault(f => f.Id == id);
+        public ActionResult<FlightRm> Find(Guid id)
+        {
+            var flight = flights.SingleOrDefault(f => f.Id == id);
+
+            if (flight == null)
+                return NotFound();
+            
+            return Ok(flight);
+        }
 
     }
 }
