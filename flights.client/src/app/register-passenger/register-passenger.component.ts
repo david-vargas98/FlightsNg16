@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { PassengerService } from './../api/services/passenger.service';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-register-passenger',
@@ -7,7 +9,18 @@ import { Component } from '@angular/core';
 })
 export class RegisterPassengerComponent {
 
-  register() {
+  constructor(private passengerService: PassengerService, private formBuilder: FormBuilder) { }
 
+  form = this.formBuilder.group({
+    email: [''],
+    firstName: [''],
+    lastName: [''],
+    isFemale: [true],
+  })
+
+  register() {
+    console.log("Form values:", this.form.value);
+    this.passengerService.registerPassenger({ body: this.form.value })
+      .subscribe(_ => console.log("Form posted to server."));
   }
 }
