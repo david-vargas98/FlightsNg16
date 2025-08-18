@@ -7,13 +7,15 @@ import { RouterModule } from '@angular/router';
 import { SearchFlightsComponent } from './search-flights/search-flights.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { BookFlightComponent } from './book-flight/book-flight.component';
+import { RegisterPassengerComponent } from './register-passenger/register-passenger.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     SearchFlightsComponent,
     NavMenuComponent,
-    BookFlightComponent
+    BookFlightComponent,
+    RegisterPassengerComponent
   ],
   imports: [
     BrowserModule,
