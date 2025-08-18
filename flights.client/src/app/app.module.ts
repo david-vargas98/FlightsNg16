@@ -19,7 +19,11 @@ import { BookFlightComponent } from './book-flight/book-flight.component';
     BrowserModule,
     HttpClientModule,
     RouterModule.forRoot([
-      { path: '', component: SearchFlightsComponent, pathMatch: 'full' }
+      { path: '', component: SearchFlightsComponent, pathMatch: 'full' },
+      { path: 'search-flights', component: SearchFlightsComponent },
+      { path: 'book-flight', component: BookFlightComponent }
+
+
     ])
   ],
   providers: [],
