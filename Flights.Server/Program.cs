@@ -19,7 +19,10 @@ namespace Flights.Server
                     Description = "Development server",
                     Url = "https://localhost:7076"
                 }); // Add a server URL for Swagger UI to connect with angular app
+
+                c.CustomOperationIds(e => $"{e.ActionDescriptor.RouteValues["action"] + e.ActionDescriptor.RouteValues["controller"]}");
             }); // Register Swagger generator
+
 
             var app = builder.Build();
 
