@@ -23,6 +23,8 @@ namespace Flights.Server
 
             var app = builder.Build();
 
+            app.UseCors(builder => builder.WithOrigins("*")); // Allow requests from any origin (for development purposes only) 
+
             app.UseSwagger().UseSwaggerUI(); // Enable the Swagger middleware and UI
 
             app.UseDefaultFiles();
