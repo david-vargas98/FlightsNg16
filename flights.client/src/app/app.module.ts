@@ -3,13 +3,22 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
+import { RouterModule } from '@angular/router';
+import { SearchFlightsComponent } from './search-flights/search-flights.component';
+import { NavMenuComponent } from './nav-menu/nav-menu.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    SearchFlightsComponent,
+    NavMenuComponent
   ],
   imports: [
-    BrowserModule, HttpClientModule
+    BrowserModule,
+    HttpClientModule,
+    RouterModule.forRoot([
+      { path: '', component: SearchFlightsComponent, pathMatch: 'full' }
+    ])
   ],
   providers: [],
   bootstrap: [AppComponent]
