@@ -47,7 +47,7 @@
         <input class="form-control" type="number" placeholder="1" />
         <div class="input-group-text">Passengers</div>
 
-        <button class="btn btn-primary" type="submit">
+        <button (click)="search()" class="btn btn-primary" type="submit">
           <i class="fas fa-search"></i>
         </button>
       </div>
@@ -72,16 +72,16 @@
             </div>
 
             <div class="col">
-              <i class="fa-solid fa-location-dot" style="display: inline; margin-right: 4px;"> {{flight.departure.place}}</i>
+              <i class="fa-solid fa-location-dot" style="display: inline; margin-right: 4px;"> {{flight.departure?.place}}</i>
             </div>
 
             <div class="col m-2">
-              <i class="fa-regular"></i>{{flight.departure.time | date}}
+              <i class="fa-regular"></i>{{flight.departure?.time | date}}
             </div>
 
             <div class="col m-2">
               <i class="fa-regular fa-clock"></i>
-              {{flight.departure.time | date:'shortTime'}}
+              {{flight.departure?.time | date:'shortTime'}}
             </div>
           </div>
 
@@ -106,16 +106,16 @@
             </div>
 
             <div class="col">
-              <i class="fa-solid fa-location-dot" style="display: inline; margin-right: 4px;"> {{flight.arrival.place}}</i>
+              <i class="fa-solid fa-location-dot" style="display: inline; margin-right: 4px;"> {{flight.arrival?.place}}</i>
             </div>
 
             <div class="col m-2">
-              <i class="fa-regular"></i>{{flight.arrival.time | date}}
+              <i class="fa-regular"></i>{{flight.arrival?.time | date}}
             </div>
 
             <div class="col m-2">
               <i class="fa-regular fa-clock"></i>
-              {{flight.arrival.time | date:'shortTime'}}
+              {{flight.arrival?.time | date:'shortTime'}}
             </div>
           </div>
         </div>
