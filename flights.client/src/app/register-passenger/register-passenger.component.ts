@@ -20,7 +20,14 @@ export class RegisterPassengerComponent {
   })
 
   checkPassenger(): void {
+    const params = { email: this.form.get('email')?.value ?? '' }
 
+    this.passengerService
+      .findPassenger(params)
+      .subscribe(_ => {
+        console.log(`Passenger exists!\n${_.email}`);
+        this.authService.loginUser({ email: this.form.get('email')?.value });
+      })
   }
 
   register() {
