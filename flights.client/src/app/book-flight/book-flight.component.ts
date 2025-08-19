@@ -4,7 +4,7 @@ import { OnInit } from '@angular/core';
 import { FlightService } from './../api/services/flight.service';
 import { BookDto, FlightRm } from '../api/models';
 import { AuthService } from '../auth/auth.service';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-book-flight',
@@ -24,7 +24,7 @@ export class BookFlightComponent implements OnInit {
   flight: FlightRm = {};
 
   form = this.formBuilder.group({
-    number: [1] // default number of seats to book
+    number: [1, Validators.compose([Validators.required, Validators.min(1), Validators.max(254)])] // default number of seats to book
   });
 
   ngOnInit(): void {
@@ -56,6 +56,10 @@ export class BookFlightComponent implements OnInit {
   }
 
   book() {
+
+    if (this.form.invalid) // check if any field is invalid
+      return;
+
     console.log(`Booking ${this.form.get('number')?.value} passengers for the flight: ${this.flight.id}`);
 
     const booking: BookDto = {
@@ -67,5 +71,9 @@ export class BookFlightComponent implements OnInit {
     this.flightService.bookFlight({ body: booking })
       .subscribe(_ => this.router.navigate(['/my-booking']),
         this.handleError);
+  }
+
+  get number() {
+    return this.form.controls.number;
   }
 }
