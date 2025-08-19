@@ -9,5 +9,6 @@
   </PropertyGroup>
   <ItemGroup>
     <Folder Include="src\app\auth\" />
+    <Folder Include="src\assets\images\" />
   </ItemGroup>
 </Project>
