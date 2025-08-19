@@ -9,6 +9,7 @@ import { SearchFlightsComponent } from './search-flights/search-flights.componen
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { BookFlightComponent } from './book-flight/book-flight.component';
 import { RegisterPassengerComponent } from './register-passenger/register-passenger.component';
+import { MyBookingsComponent } from './my-bookings/my-bookings.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { RegisterPassengerComponent } from './register-passenger/register-passen
     SearchFlightsComponent,
     NavMenuComponent,
     BookFlightComponent,
-    RegisterPassengerComponent
+    RegisterPassengerComponent,
+    MyBookingsComponent
   ],
   imports: [
     BrowserModule,
