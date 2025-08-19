@@ -1,4 +1,5 @@
 using Microsoft.OpenApi.Models;
+using Flights.Server.Data;
 
 namespace Flights.Server
 {
@@ -23,6 +24,8 @@ namespace Flights.Server
                 c.CustomOperationIds(e => $"{e.ActionDescriptor.RouteValues["action"] + e.ActionDescriptor.RouteValues["controller"]}");
             }); // Register Swagger generator
 
+            // Adding singleton Entities to the DI container
+            builder.Services.AddSingleton<Entities>();
 
             var app = builder.Build();
 

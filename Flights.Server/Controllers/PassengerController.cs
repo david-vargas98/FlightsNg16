@@ -11,19 +11,26 @@ namespace Flights.Server.Controllers
     [ApiController]
     public class PassengerController : ControllerBase
     {
+        private readonly Entities _entities;
+
+        public PassengerController(Entities entities)
+        {
+            _entities = entities;
+        }
+
         [HttpPost]
         [ProducesResponseType(201)]
         [ProducesResponseType(400)]
         [ProducesResponseType(500)]
         public IActionResult Register(NewPassengerDTO dto)
         {
-            Entities.Passengers.Add(new Passenger(
+            _entities.Passengers.Add(new Passenger(
                 dto.Email,
                 dto.FirstName,
                 dto.LastName,
                 dto.Gender
                 ));
-            System.Diagnostics.Debug.WriteLine(Entities.Passengers.Count); // Debug on console :0
+            System.Diagnostics.Debug.WriteLine(_entities.Passengers.Count); // Debug on console :0
             return CreatedAtAction(nameof(Find), new {email= dto.Email}, dto);
         }
 
@@ -31,7 +38,7 @@ namespace Flights.Server.Controllers
         public ActionResult<PassengerRm> Find(string email)
         {
             // This makes sure that values are matching and we're returning a PassengerRm and not a NewPassengerDTO
-            var passenger = Entities.Passengers.FirstOrDefault(p => p.Email == email);
+            var passenger = _entities.Passengers.FirstOrDefault(p => p.Email == email);
 
             if (passenger == null)
                 return NotFound();

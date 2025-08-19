@@ -5,10 +5,10 @@ namespace Flights.Server.Data
 {
     public class Entities
     {
-        static public IList<Passenger> Passengers = new List<Passenger>();
+        public IList<Passenger> Passengers = new List<Passenger>();
         
         static Random random = new Random();
-        static public Flight[] Flights = new Flight[]
+        public Flight[] Flights = new Flight[]
 {
             new (
                 Guid.NewGuid(),
