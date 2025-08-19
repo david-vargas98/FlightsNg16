@@ -4,6 +4,7 @@ import { OnInit } from '@angular/core';
 import { FlightService } from './../api/services/flight.service';
 import { FlightRm } from '../api/models';
 import { AuthService } from '../auth/auth.service';
+import { FormBuilder } from '@angular/forms';
 
 @Component({
   selector: 'app-book-flight',
@@ -15,11 +16,16 @@ export class BookFlightComponent implements OnInit {
     private route: ActivatedRoute,
     private flightService: FlightService,
     private router: Router,
-    private AuthService: AuthService
+    private AuthService: AuthService,
+    private formBuilder: FormBuilder
   ) { }
 
   flightId: string = 'not loaded';
   flight: FlightRm = {};
+
+  form = this.formBuilder.group({
+    number: [1] // default number of seats to book
+  });
 
   ngOnInit(): void {
 
@@ -47,5 +53,9 @@ export class BookFlightComponent implements OnInit {
     console.error("Response Error. Status:", err.status);
     console.error("Response Error. Status Text:", err.statusText);
     console.log(err);
+  }
+
+  book() {
+    console.log(`Booking ${this.form.get('number')?.value} passengers for the flight: ${this.flight.id}`);
   }
 }
