@@ -29,10 +29,8 @@ import { MyBookingsComponent } from './my-bookings/my-bookings.component';
       { path: '', component: SearchFlightsComponent, pathMatch: 'full' },
       { path: 'search-flights', component: SearchFlightsComponent },
       { path: 'book-flight/:flightId', component: BookFlightComponent },
-      { path: 'register-passenger', component: RegisterPassengerComponent }
-
-
-
+      { path: 'register-passenger', component: RegisterPassengerComponent },
+      { path: 'my-booking', component: MyBookingsComponent }
     ])
   ],
   providers: [],

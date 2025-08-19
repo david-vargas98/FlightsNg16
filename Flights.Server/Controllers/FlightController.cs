@@ -94,11 +94,22 @@ namespace Flights.Server.Controllers
         }
 
         [HttpPost]
-        public void Book(BookDTO dto)
+        [ProducesResponseType(400)]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
+        [ProducesResponseType(200)]
+        public IActionResult Book(BookDTO dto)
         {
             System.Diagnostics.Debug.WriteLine($"Bookin' a new flight {dto.FlightId}");
 
+            var flightFound = flights.Any(f => f.Id == dto.FlightId);
+
+            if (flightFound == false)
+                return NotFound();
+
             Bookings.Add(dto);
+
+            return CreatedAtAction(nameof(Find), new {id= dto.FlightId}, dto);
         }
 
     }
