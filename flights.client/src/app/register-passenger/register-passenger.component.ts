@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { PassengerService } from './../api/services/passenger.service';
 import { FormBuilder } from '@angular/forms';
+import { AuthService } from './../auth/auth.service';
 
 @Component({
   selector: 'app-register-passenger',
@@ -9,7 +10,7 @@ import { FormBuilder } from '@angular/forms';
 })
 export class RegisterPassengerComponent {
 
-  constructor(private passengerService: PassengerService, private formBuilder: FormBuilder) { }
+  constructor(private passengerService: PassengerService, private formBuilder: FormBuilder, private authService: AuthService) { }
 
   form = this.formBuilder.group({
     email: [''],
@@ -18,9 +19,14 @@ export class RegisterPassengerComponent {
     isFemale: [true],
   })
 
+  checkPassenger(): void {
+
+  }
+
   register() {
     console.log("Form values:", this.form.value);
     this.passengerService.registerPassenger({ body: this.form.value })
-      .subscribe(_ => console.log("Form posted to server."));
+      .subscribe(_ => this.authService.loginUser({ email: this.form.get('email')?.value }),
+      console.error);
   }
 }

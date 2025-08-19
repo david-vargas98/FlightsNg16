@@ -4,5 +4,6 @@
 
 export type { FlightRm } from './models/flight-rm';
 export type { NewPassengerDto } from './models/new-passenger-dto';
+export type { PassengerRm } from './models/passenger-rm';
 export type { ProblemDetails } from './models/problem-details';
 export type { TimePlaceRm } from './models/time-place-rm';
