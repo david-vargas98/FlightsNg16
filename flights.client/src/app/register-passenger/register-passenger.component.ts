@@ -24,16 +24,16 @@ export class RegisterPassengerComponent {
 
     this.passengerService
       .findPassenger(params)
-      .subscribe(_ => {
-        console.log(`Passenger exists!\n${_.email}`);
-        this.authService.loginUser({ email: this.form.get('email')?.value });
-      })
+      .subscribe(this.login);
   }
 
   register() {
     console.log("Form values:", this.form.value);
     this.passengerService.registerPassenger({ body: this.form.value })
-      .subscribe(_ => this.authService.loginUser({ email: this.form.get('email')?.value }),
-      console.error);
+      .subscribe(this.login, console.error);
+  }
+
+  private login = () => {
+    this.authService.loginUser({ email: this.form.get('email')?.value });
   }
 }
