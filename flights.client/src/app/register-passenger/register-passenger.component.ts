@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { PassengerService } from './../api/services/passenger.service';
 import { FormBuilder } from '@angular/forms';
 import { AuthService } from './../auth/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register-passenger',
@@ -10,7 +11,12 @@ import { AuthService } from './../auth/auth.service';
 })
 export class RegisterPassengerComponent {
 
-  constructor(private passengerService: PassengerService, private formBuilder: FormBuilder, private authService: AuthService) { }
+  constructor(
+    private passengerService: PassengerService,
+    private formBuilder: FormBuilder,
+    private authService: AuthService,
+    private router: Router
+  ) { }
 
   form = this.formBuilder.group({
     email: [''],
@@ -24,7 +30,10 @@ export class RegisterPassengerComponent {
 
     this.passengerService
       .findPassenger(params)
-      .subscribe(this.login);
+      .subscribe(this.login, e => {
+        if (e.status != 404)
+          console.error(e);
+      });
   }
 
   register() {
@@ -35,5 +44,7 @@ export class RegisterPassengerComponent {
 
   private login = () => {
     this.authService.loginUser({ email: this.form.get('email')?.value });
+
+    this.router.navigate(['/search-flights'])
   }
 }
