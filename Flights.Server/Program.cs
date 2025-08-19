@@ -1,3 +1,5 @@
+using Microsoft.OpenApi.Models;
+
 namespace Flights.Server
 {
     public class Program
@@ -10,7 +12,27 @@ namespace Flights.Server
 
             builder.Services.AddControllers();
 
+            builder.Services.AddSwaggerGen(c =>
+            {
+                c.AddServer(new OpenApiServer
+                {
+                    Description = "Development server",
+                    Url = "https://localhost:7076"
+                }); // Add a server URL for Swagger UI to connect with angular app
+
+                c.CustomOperationIds(e => $"{e.ActionDescriptor.RouteValues["action"] + e.ActionDescriptor.RouteValues["controller"]}");
+            }); // Register Swagger generator
+
+
             var app = builder.Build();
+
+            app.UseCors(builder => builder
+            .WithOrigins("*")
+            .AllowAnyMethod()
+            .AllowAnyHeader()
+            ); // Allow requests from any origin, any method and any header (for development purposes only) 
+
+            app.UseSwagger().UseSwaggerUI(); // Enable the Swagger middleware and UI
 
             app.UseDefaultFiles();
             app.UseStaticFiles();
