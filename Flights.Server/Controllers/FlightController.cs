@@ -20,7 +20,7 @@ namespace Flights.Server.Controllers
                 random.Next(90, 5000).ToString(),
                 new TimePlace("Los Angeles",DateTime.Now.AddHours(random.Next(1, 3))),
                 new TimePlace("Istanbul",DateTime.Now.AddHours(random.Next(4, 10))),
-                    random.Next(1, 853)
+                2
                 ),
             new (   Guid.NewGuid(),
                 "Deutsche BA",
@@ -130,13 +130,18 @@ namespace Flights.Server.Controllers
             if (flight == null)
                 return NotFound();
 
+            // Domain validation rule
+            if(flight.RemainingNumberOfSeats < dto.NumberOfSeats) // we check if there are enough seats available
+                return Conflict(new { message= "Not enough seats available for booking" });
+            
             flight.Bookings.Add(             // we adjust the bookings list with the new booking
                 new Booking(
-                    dto.FlightId,
                     dto.PassengerEmail,
                     dto.NumberOfSeats
                     )
                 );
+
+            flight.RemainingNumberOfSeats -= dto.NumberOfSeats; // we adjust the remaining number of seats
 
             return CreatedAtAction(nameof(Find), new {id= dto.FlightId}, dto);
         }
