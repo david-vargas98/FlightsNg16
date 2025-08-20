@@ -22,6 +22,7 @@ namespace Flights.Server
 
             builder.Services.AddSwaggerGen(c =>
             {
+                c.DescribeAllParametersInCamelCase(); // i.e parameters passed fron the client 
                 c.AddServer(new OpenApiServer
                 {
                     Description = "Development server",
