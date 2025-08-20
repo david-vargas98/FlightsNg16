@@ -13,7 +13,7 @@ namespace Flights.Server
 
             // Add dbcontext to the DI container
             builder.Services.AddDbContext<Entities>(options => 
-            options.UseInMemoryDatabase(databaseName: "Flights"), ServiceLifetime.Singleton);
+            options.UseSqlServer("Data Source=localhost,1433; Database=Flights; User=saedgar; Password=1234!Secret"));
 
             // Add services to the container.
 
@@ -30,13 +30,14 @@ namespace Flights.Server
                 c.CustomOperationIds(e => $"{e.ActionDescriptor.RouteValues["action"] + e.ActionDescriptor.RouteValues["controller"]}");
             }); // Register Swagger generator
 
-            // Adding singleton Entities to the DI container
-            builder.Services.AddSingleton<Entities>();
+            // Adding scoped services to the DI container (which created an instance per request)
+            builder.Services.AddScoped<Entities>();
 
             var app = builder.Build();
 
             // Creating a scope to seed the database with initial flight data
             var entities = app.Services.CreateScope().ServiceProvider.GetService<Entities>();
+            entities.Database.EnsureCreated(); // Ensure the database is created
             var random = new Random();
 
             // Seed initial flight data
