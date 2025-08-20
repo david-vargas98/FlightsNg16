@@ -12,5 +12,13 @@ namespace Flights.Server.Data
         {
             
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Passenger>().HasKey(p => p.Email); // Configure the PK for the Passenger entity
+
+            modelBuilder.Entity<Flight>().OwnsOne(f => f.Departure);
+            modelBuilder.Entity<Flight>().OwnsOne(f => f.Arrival);
+        }
     }
 }

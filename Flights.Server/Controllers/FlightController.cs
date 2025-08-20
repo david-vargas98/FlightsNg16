@@ -83,6 +83,8 @@ namespace Flights.Server.Controllers
             if (error is OverbookError)
                 return Conflict(new { message= "Not enough seats available for booking" });
 
+            _entities.SaveChanges();
+
             return CreatedAtAction(nameof(Find), new {id= dto.FlightId}, dto);
         }
 
