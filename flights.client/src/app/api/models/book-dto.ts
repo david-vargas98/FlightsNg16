@@ -4,6 +4,6 @@
 
 export interface BookDto {
   flightId?: string;
-  numberOfSeats?: number | null;
+  numberOfSeats?: number;
   passengerEmail?: string | null;
 }

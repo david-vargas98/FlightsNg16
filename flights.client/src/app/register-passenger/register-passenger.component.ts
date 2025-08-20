@@ -1,29 +1,36 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { PassengerService } from './../api/services/passenger.service';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from './../auth/auth.service';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-register-passenger',
   templateUrl: './register-passenger.component.html',
   styleUrls: ['./register-passenger.component.css']
 })
-export class RegisterPassengerComponent {
+export class RegisterPassengerComponent implements OnInit {
 
   constructor(
     private passengerService: PassengerService,
     private formBuilder: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private activatedRoute: ActivatedRoute
   ) { }
 
+  requestedUrl?: string = undefined
+
   form = this.formBuilder.group({
-    email: [''],
-    firstName: [''],
-    lastName: [''],
-    isFemale: [true],
+    email: ['', Validators.compose([Validators.required, Validators.minLength(3), Validators.maxLength(100)])],
+    firstName: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(35)])],
+    lastName: ['', Validators.compose([Validators.required, Validators.minLength(2), Validators.maxLength(35)])],
+    isFemale: [true, Validators.required],
   })
+
+  ngOnInit() {
+    this.activatedRoute.params.subscribe(p => this.requestedUrl = p['requestedUrl'])
+  }
 
   checkPassenger(): void {
     const params = { email: this.form.get('email')?.value ?? '' }
@@ -37,6 +44,10 @@ export class RegisterPassengerComponent {
   }
 
   register() {
+
+    if (this.form.invalid)
+      return;
+
     console.log("Form values:", this.form.value);
     this.passengerService.registerPassenger({ body: this.form.value })
       .subscribe(this.login, console.error);
@@ -45,6 +56,6 @@ export class RegisterPassengerComponent {
   private login = () => {
     this.authService.loginUser({ email: this.form.get('email')?.value });
 
-    this.router.navigate(['/search-flights'])
+    this.router.navigate([this.requestedUrl ?? '/search-flights'])
   }
 }
