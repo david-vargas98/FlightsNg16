@@ -1,11 +1,16 @@
 ﻿using Flights.Server.Domain.Entities;
-using System;
+using Microsoft.EntityFrameworkCore;
 
 namespace Flights.Server.Data
 {
-    public class Entities
+    public class Entities : DbContext
     {
-        public IList<Passenger> Passengers = new List<Passenger>();
-        public List<Flight> Flights = new List<Flight>();
+        public DbSet<Passenger> Passengers => Set<Passenger>();
+        public DbSet<Flight> Flights => Set<Flight>();
+
+        public Entities(DbContextOptions<Entities> options) : base(options)
+        {
+            
+        }
     }
 }

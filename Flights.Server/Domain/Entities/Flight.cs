@@ -3,18 +3,30 @@ using Flights.Server.ReadModels;
 
 namespace Flights.Server.Domain.Entities
 {
-    public record Flight(
-        Guid Id,
-        string Airline,
-        string Price,
-        TimePlace Departure,
-        TimePlace Arrival,
-        int RemainingNumberOfSeats
-        )
+    public class Flight
     {
+        public Guid Id { get; set; }
+        public string Airline { get; set; }
+        public string Price { get; set; }
+        public TimePlace Departure { get; set; }
+        public TimePlace Arrival { get; set; }
+        public int RemainingNumberOfSeats { get; set; }
+
         public IList<Booking> Bookings = new List<Booking>();
 
-        public int RemainingNumberOfSeats { get; set; } = RemainingNumberOfSeats; // Makes the property mutable
+        // Default constructor for creating an empty Flight object
+        public Flight() { }
+        
+        // Constructor for creating a parametized Flight object
+        public Flight(Guid id, string airline, string price, TimePlace departure, TimePlace arrival, int remainingNumberOfSeats)
+        {
+            Id = id;
+            Airline = airline;
+            Price = price;
+            Departure = departure;
+            Arrival = arrival;
+            RemainingNumberOfSeats = remainingNumberOfSeats;
+        }
 
         public object? MakeBooking(string passengerEmail, byte numberOfSeats)
         {

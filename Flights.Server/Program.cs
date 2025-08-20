@@ -1,6 +1,7 @@
 using Microsoft.OpenApi.Models;
 using Flights.Server.Data;
 using Flights.Server.Domain.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace Flights.Server
 {
@@ -9,6 +10,10 @@ namespace Flights.Server
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+
+            // Add dbcontext to the DI container
+            builder.Services.AddDbContext<Entities>(options => 
+            options.UseInMemoryDatabase(databaseName: "Flights"), ServiceLifetime.Singleton);
 
             // Add services to the container.
 
@@ -88,7 +93,10 @@ namespace Flights.Server
                 new TimePlace("Zagreb",DateTime.Now.AddHours(random.Next(4, 60))),
                     random.Next(1, 853))
             };
-            entities.Flights.AddRange(flightsToSeed);
+
+            entities.Flights.AddRange(flightsToSeed); // Seeding the db
+
+            entities.SaveChanges(); // Save the changes to the in-memory db
 
             app.UseCors(builder => builder
             .WithOrigins("*")
