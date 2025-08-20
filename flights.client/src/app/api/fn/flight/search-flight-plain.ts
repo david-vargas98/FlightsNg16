@@ -15,7 +15,7 @@ export interface SearchFlight$Plain$Params {
   toDate?: string;
   from?: string;
   destination?: string;
-  numberOfPassengers?: string;
+  numberOfPassengers?: number;
 }
 
 export function searchFlight$Plain(http: HttpClient, rootUrl: string, params?: SearchFlight$Plain$Params, context?: HttpContext): Observable<StrictHttpResponse<Array<FlightRm>>> {

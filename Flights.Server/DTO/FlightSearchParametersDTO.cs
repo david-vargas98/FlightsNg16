@@ -16,6 +16,6 @@ namespace Flights.Server.DTO
         string? Destination,
 
         [DefaultValue(1)]
-        string? NumberOfPassengers
+        int? NumberOfPassengers
         );
 }
