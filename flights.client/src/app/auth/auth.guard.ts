@@ -8,7 +8,8 @@ export const authGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
 
   if (!authService.currentUser) {
-    return router.parseUrl('/register-passenger'); // better than navigate, since it doesn't attempt double navigations
+    router.navigate(['/register-passenger', { requestedUrl: state.url }]);
+    return false;
   }
 
   return true;
