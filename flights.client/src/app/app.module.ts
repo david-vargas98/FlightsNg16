@@ -31,7 +31,7 @@ import { authGuard } from './auth/auth.guard';
       { path: 'search-flights', component: SearchFlightsComponent },
       { path: 'book-flight/:flightId', component: BookFlightComponent, canActivate: [authGuard] },
       { path: 'register-passenger', component: RegisterPassengerComponent },
-      { path: 'my-booking', component: MyBookingsComponent }
+      { path: 'my-booking', component: MyBookingsComponent, canActivate: [authGuard] }
     ])
   ],
   providers: [],
