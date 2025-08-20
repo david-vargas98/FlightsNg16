@@ -28,7 +28,30 @@ namespace Flights.Server.Controllers
 
         public IEnumerable<FlightRm> Search([FromQuery] FlightSearchParametersDTO @params)
         {
-            var flightRmList = _entities.Flights.Select(flight => new FlightRm( // we convert the flights to a read model for sending to the client
+
+            _logger.LogInformation("Searching for a flight for: {Destination} ", @params.Destination);
+
+            IQueryable<Flight> flights = _entities.Flights; // We take all flights from DB
+
+            if (!string.IsNullOrEmpty(@params.Destination)) // filter by destination
+                flights = flights.Where(f => f.Arrival.Place.Contains(@params.Destination));
+            
+            if (!string.IsNullOrEmpty(@params.From)) // filter by departure place
+                flights = flights.Where(f => f.Departure.Place.Contains(@params.From));
+            
+            if (@params.FromDate != null) // filter by departure date
+                flights = flights.Where(f => f.Departure.Time >= @params.FromDate.Value.Date);
+
+            if (@params.ToDate != null) // filter by arrival date
+                flights = flights.Where(f => f.Arrival.Time >= @params.ToDate.Value.Date.AddDays(1).AddTicks(-1));
+
+            if (@params.NumberOfPassengers != 0 && @params.NumberOfPassengers != null) // by number of passengers
+                flights = flights.Where(f => f.RemainingNumberOfSeats >= @params.NumberOfPassengers);
+            else
+                flights = flights.Where(f => f.RemainingNumberOfSeats >= 1); // if no passengers, we assume at least one seat
+
+            var flightRmList = flights // we convert from IQueryable<Flight> to an IEnumerable<FlightRm>
+                .Select(flight => new FlightRm(
                 flight.Id,
                 flight.Airline,
                 flight.Price,
