@@ -26,7 +26,7 @@ namespace Flights.Server.Controllers
         [ProducesResponseType(500)] // internal server error
         [ProducesResponseType(typeof(IEnumerable<FlightRm>), 200)]
 
-        public IEnumerable<FlightRm> Search()
+        public IEnumerable<FlightRm> Search([FromQuery] FlightSearchParametersDTO @params)
         {
             var flightRmList = _entities.Flights.Select(flight => new FlightRm( // we convert the flights to a read model for sending to the client
                 flight.Id,
