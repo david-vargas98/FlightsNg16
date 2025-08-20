@@ -13,7 +13,8 @@ namespace Flights.Server
 
             // Add dbcontext to the DI container
             builder.Services.AddDbContext<Entities>(options => 
-            options.UseSqlServer("Data Source=localhost,1433; Database=Flights; User=saedgar; Password=1234!Secret"));
+            options.UseSqlServer(builder.Configuration.GetConnectionString("Flights"))
+            );
 
             // Add services to the container.
 
