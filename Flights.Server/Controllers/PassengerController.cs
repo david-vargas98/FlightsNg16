@@ -30,7 +30,7 @@ namespace Flights.Server.Controllers
                 dto.LastName,
                 dto.Gender
                 ));
-            System.Diagnostics.Debug.WriteLine(_entities.Passengers.Count); // Debug on console :0
+
             return CreatedAtAction(nameof(Find), new {email= dto.Email}, dto);
         }
 
